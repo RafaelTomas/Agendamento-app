@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-
         this.router.navigate(['/contatos']);
     } else {
       console.error('Formulário inválido');
