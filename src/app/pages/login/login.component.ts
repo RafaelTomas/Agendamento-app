@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  standalone:true,
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -12,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
       this.createForm();
@@ -24,5 +26,13 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     });
   }
-  login() { console.info(this.loginForm.value)}
+
+  login() {
+    if (this.loginForm.valid) {
+
+        this.router.navigate(['/contatos']);
+    } else {
+      console.error('Formulário inválido');
+    }
+  }
 }
