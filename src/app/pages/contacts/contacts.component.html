@@ -1,4 +1,67 @@
 <section>
     <app-header></app-header>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-between ">
+                        <h3 class=""> Lista de contato </h3>
+                        <button type="button" class="btn btn btn-outline-success" (click)="open(content)">
+                            <fa-icon size="lg" [icon]="FaPlus"></fa-icon> Contato
+                          </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <hr>
+                </div>
+            </div>
+              <div
+                class="row justify-content-center align-items-center g-2"
+              >
+                <div class="col">Nome</div>
+                <div class="col">Email</div>
+                <div class="col">Celular</div>
+                <div class="col">Telefone</div>
+                <div class="col text-center">Ação</div>
+              </div>
+              <div class="row">
+                <div class="col">
+                    <hr>
+                </div>
+            </div>
+            <div
+            class="row justify-content-center align-items-center g-2"
+          >
+            <div class="col">Rafael</div>
+            <div class="col">Rafael2EMAIL.com</div>
+            <div class="col">(81) 99999-9999</div>
+            <div class="col"> 9999-9999</div>
+            <div class="col d-flex justify-content-around">
+                <fa-icon [icon]="FaPenToSquare"></fa-icon>
+                <fa-icon [icon]="FaStar"></fa-icon>
+                <fa-icon [icon]="FaTrash"></fa-icon>
+            </div>
+          </div>
+            <hr>
+        </div>
 </section>
 
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Novo Contato</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="mb-3">
+				<label for="dateOfBirth">Date of birth</label>
+				<div class="input-group">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Save</button>
+	</div>
+</ng-template>

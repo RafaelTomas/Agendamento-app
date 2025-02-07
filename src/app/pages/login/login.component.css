@@ -1,10 +1,11 @@
 
 .bg-color-red-espicify{
-    background-color: #a40008;
+    background-color: #a400080f;
 }
 .border-radius-img{
-    border-radius: 1rem 0 0 1rem;
+    border-radius: 0.2rem 0 0 0.2rem;
 }
-.border-radius-card{
-    border-radius: 1rem;
+
+.box-shadow-card{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
