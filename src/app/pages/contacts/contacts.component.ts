@@ -1,15 +1,12 @@
 import { Component, ViewChild
 } from '@angular/core';
-import { HeaderComponent } from "../../shared/components/header/header.component";
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { faPlus,faPenToSquare, faStar, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Table, TableModule } from 'primeng/table';
-import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../shared/service/contacts.service';
+import { faPlus,faPenToSquare, faStar, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { ImportsModule } from './imports';
+import { Table } from 'primeng/table';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
+
 
 interface Column {
   field: string;
@@ -18,7 +15,7 @@ interface Column {
 
 @Component({
   selector: 'app-contacts',
-  imports: [CommonModule, HeaderComponent,FontAwesomeModule, TableModule, IconFieldModule, InputIconModule],
+  imports: [ImportsModule,ToggleButtonModule],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
 })
@@ -30,29 +27,49 @@ export class ContactsComponent {
   FaTrash = faTrash;
   FaSearch = faSearch;
   loading = true;
+  visible = false;
+  titleModal = '';
+
   cols!: Column[];
   contacts!: any[];
 
-  constructor(private modalService: NgbModal, private contactsService: ContactsService){}
+  constructor(private contactsService: ContactsService){}
 
   ngOnInit() {
     this.cols = [
+      { field: 'sn_favorito', header: 'Favorito' },
       { field: 'nome', header: 'Nome' },
       { field: 'email', header: 'Email' },
       { field: 'celular', header: 'Celular' },
-      { field: 'telefone', header: 'Telefone' }
+      { field: 'telefone', header: 'Telefone' },
+      { field: 'acao', header: '' },
   ];
   this.contactsService.getContactsLarge().then((contacts) => {
-    this.contacts = contacts
+    this.contacts = contacts;
     this.loading = false;
   });
   }
 
-  open(content:any) {
-    console.log("CLICOU")
-		this.modalService.open(content)
-	}
   applyFilterGlobal($event: any, stringVal: any) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
+
+  showDialog(data?: any) {
+    if(!data){
+      this.createContact();
+    }
+    console.log(this.visible);
+  }
+
+  createContact(){
+    this.titleModal =  'Adicione um contato';
+    this.visible = true;
+    console.log(this.visible)
+  }
+
+  closeModal(event: any){
+    this.visible = event;
+  }
+
+
 }
