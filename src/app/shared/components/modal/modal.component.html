@@ -1,38 +1,58 @@
-<p-dialog
-header="{{ header }}"
-[modal]="true"
-[(visible)]="visible"
-(visibleChange)="closeModal(false)"
-[style]="{ width: '25rem' }"
->
-    <span class="p-text-secondary block mb-8">Update your information.</span>
-    <div class="flex items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-24">Nome</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-24">Email</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-24">Celular</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-24">Telefone</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-24">Favorito</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex items-center gap-4 mb-4">
-        <label for="username" class="font-semibold w-24">Colocar o delete</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
+<p-dialog header="{{ header }}" [modal]="true" [(visible)]="visible" (visibleChange)="closeModal(false)"
+    [style]="{ width: '25rem' }">
 
-    <div class="d-flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (click)="closeModal(false)" />
-        <p-button label="Save" (click)="closeModal(false)" />
-    </div>
-  </p-dialog>
+    <form [formGroup]="form" (ngSubmit)="submitData()">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Nome</label>
+            <input required  type="text" class="form-control" [class]="!form.controls['nome'].valid && (form.controls['nome'].touched)? 'is-invalid' : null " id="exampleFormControlInput1" formControlName="nome">
+            <div *ngIf="form.controls['nome']?.invalid && (form.controls['nome'].touched)" class="invalid-feedback d-block">
+                <div *ngIf="form.controls['nome'].errors?.['required']" > Digite um nome.</div>
+                <div *ngIf="form.controls['nome'].errors?.['maxLength']">
+                    Limite máximo 70 dígitos.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput2" class="form-label">Email</label>
+            <input required type="text" class="form-control" [class]="!form.controls['email'].valid && (form.controls['email'].touched)? 'is-invalid' : null " id="exampleFormControlInput2" formControlName="email">
+            <div *ngIf="form.controls['email']?.invalid && (form.controls['email'].touched)" class="invalid-feedback d-block">
+                <div *ngIf="form.controls['email'].errors?.['required']" > Digite um email.</div>
+                <div *ngIf="form.controls['email'].errors?.['email']">
+                   Digite um email válido.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput3" class="form-label">Celular</label>
+            <input type="text" class="form-control"  [class]="!form.controls['celular'].valid && (form.controls['celular'].touched)? 'is-invalid' : null "  id="exampleFormControlInput3" formControlName="celular">
+            <div *ngIf="form.controls['celular']?.invalid && (form.controls['celular'].touched)" class="invalid-feedback d-block">
+                <div *ngIf="form.controls['celular'].errors?.['required']" > Digite um número de celular.</div>
+                <div *ngIf="form.controls['celular'].errors?.['maxLength']">
+                   Limite máximo 15 dígitos.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput4" class="form-label" [class]="!form.controls['telefone'].valid && (form.controls['telefone'].touched)? 'is-invalid' : null " >Telefone</label>
+            <input type="text" class="form-control" id="exampleFormControlInput4" formControlName="telefone">
+            <div *ngIf="form.controls['telefone']?.invalid && (form.controls['telefone'].touched)" class="invalid-feedback d-block">
+                <div *ngIf="form.controls['telefone'].errors?.['maxLength']">
+                   Limite máximo 9 dígitos.
+                </div>
+            </div>
+        </div>
+        <div class=" d-flex justify-content-between">
+            <div class="mb-3">
+                <p-togglebutton formControlName="sn_favorito" (onChange)="updateFavorite($event)" onLabel="Favorito" offLabel="Favoritar" onIcon="pi pi-star-fill" offIcon="pi pi-star" styleClass="w-36" />
+            </div>
+            <!-- <div class="flex items-center gap-4 mb-4">
+                <label for="username" class="font-semibold w-24">Colocar o delete</label>
+                <input pInputText id="username" class="flex-auto" autocomplete="off" formControlName="sn_ativo" />
+            </div> -->
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <p-button label="Cancel" severity="secondary" (click)="closeModal(false)" />
+            <p-button label="Save" type="submit" />
+        </div>
+    </form>
+</p-dialog>
