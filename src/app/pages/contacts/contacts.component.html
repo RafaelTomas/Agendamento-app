@@ -1,22 +1,53 @@
 <section>
-    <app-header></app-header>
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col">
-                    <div class="d-flex justify-content-between ">
-                        <h3 class=""> Lista de contato </h3>
-                        <button type="button" class="btn btn btn-outline-success" (click)="open(content)">
-                            <fa-icon size="lg" [icon]="FaPlus"></fa-icon> Contato
-                          </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <hr>
-                </div>
-            </div>
-              <div
+  <app-header></app-header>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col">
+        <div class="d-flex justify-content-between ">
+          <h3 class=""> Lista de contato </h3>
+          <button type="button" class="btn btn btn-outline-success" (click)="open(content)">
+            <fa-icon size="lg" [icon]="FaPlus"></fa-icon> Contato
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+    <p-table #dt [rowsPerPageOptions]="[5, 10, 20]" [loading]="loading" [paginator]="true" [rows]="5" [columns]="cols" [value]="contacts" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template #caption>
+        <div class="flex">
+            <p-iconfield iconPosition="left" class="ml-auto">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input
+                    pInputText
+                    type="text"
+                    (input)="applyFilterGlobal($event, 'contains')"
+                    placeholder="Pesquisar"
+                />
+            </p-iconfield>
+        </div>
+    </ng-template>
+      <ng-template #header let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            {{ rowData[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <!-- <div
                 class="row justify-content-center align-items-center g-2"
               >
                 <div class="col">Nome</div>
@@ -43,25 +74,25 @@
                 <fa-icon [icon]="FaTrash"></fa-icon>
             </div>
           </div>
-            <hr>
-        </div>
+            <hr> -->
+  </div>
 </section>
 
 <ng-template #content let-modal>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Novo Contato</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-	</div>
-	<div class="modal-body">
-		<form>
-			<div class="mb-3">
-				<label for="dateOfBirth">Date of birth</label>
-				<div class="input-group">
-				</div>
-			</div>
-		</form>
-	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Save</button>
-	</div>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Novo Contato</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="dateOfBirth">Date of birth</label>
+        <div class="input-group">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Save</button>
+  </div>
 </ng-template>
