@@ -7,7 +7,7 @@
             <input required  type="text" class="form-control" [class]="!form.controls['nome'].valid && (form.controls['nome'].touched)? 'is-invalid' : null " id="exampleFormControlInput1" formControlName="nome">
             <div *ngIf="form.controls['nome']?.invalid && (form.controls['nome'].touched)" class="invalid-feedback d-block">
                 <div *ngIf="form.controls['nome'].errors?.['required']" > Digite um nome.</div>
-                <div *ngIf="form.controls['nome'].errors?.['maxLength']">
+                <div *ngIf="form.controls['nome'].errors?.['maxlength']">
                     Limite máximo 70 dígitos.
                 </div>
             </div>
@@ -27,23 +27,25 @@
             <input type="text" class="form-control"  [class]="!form.controls['celular'].valid && (form.controls['celular'].touched)? 'is-invalid' : null "  id="exampleFormControlInput3" formControlName="celular">
             <div *ngIf="form.controls['celular']?.invalid && (form.controls['celular'].touched)" class="invalid-feedback d-block">
                 <div *ngIf="form.controls['celular'].errors?.['required']" > Digite um número de celular.</div>
-                <div *ngIf="form.controls['celular'].errors?.['maxLength']">
+                <div *ngIf="form.controls['celular'].errors?.['maxlength']">
                    Limite máximo 15 dígitos.
                 </div>
             </div>
         </div>
         <div class="mb-3">
-            <label for="exampleFormControlInput4" class="form-label" [class]="!form.controls['telefone'].valid && (form.controls['telefone'].touched)? 'is-invalid' : null " >Telefone</label>
-            <input type="text" class="form-control" id="exampleFormControlInput4" formControlName="telefone">
+            <label for="exampleFormControlInput4" class="form-label"  >Telefone</label>
+            <input type="text" class="form-control" [class]="!form.controls['telefone'].valid && (form.controls['telefone'].touched)? 'is-invalid' : null " id="exampleFormControlInput4" formControlName="telefone">
             <div *ngIf="form.controls['telefone']?.invalid && (form.controls['telefone'].touched)" class="invalid-feedback d-block">
-                <div *ngIf="form.controls['telefone'].errors?.['maxLength']">
+                <div *ngIf="form.controls['telefone'].errors?.['maxlength']">
                    Limite máximo 9 dígitos.
                 </div>
             </div>
         </div>
         <div class=" d-flex justify-content-between">
             <div class="mb-3">
-                <p-togglebutton formControlName="sn_favorito" (onChange)="updateFavorite($event)" onLabel="Favorito" offLabel="Favoritar" onIcon="pi pi-star-fill" offIcon="pi pi-star" styleClass="w-36" />
+                <p-togglebutton
+                formControlName="sn_favorito"
+                onLabel="Favorito" offLabel="Favoritar" onIcon="pi pi-star-fill" offIcon="pi pi-star" styleClass="w-36" />
             </div>
             <!-- <div class="flex items-center gap-4 mb-4">
                 <label for="username" class="font-semibold w-24">Colocar o delete</label>

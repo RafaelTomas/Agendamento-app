@@ -46,18 +46,13 @@ export class ModalComponent implements OnInit {
 
   closeModal(value: boolean) {
     this.close.emit(value);
+    this.form.reset();
   }
 
   submitData() {
     if(this.form.valid){
       this.formData.emit();
-      this.closeModal(false)
-      console.log(this.form.value)
+      this.closeModal(false);
     }
-  }
-
-  updateFavorite(event: any){
-    this.form.controls['sn_favorito'].setValue(event.checked ? 'S' : 'N');
-    console.log(this.form.controls['sn_favorito'].value)
   }
 }
