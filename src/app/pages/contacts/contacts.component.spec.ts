@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactsComponent } from './contacts.component';
+import { ImportsModule } from './imports';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { ContactsService } from '../../shared/service/contacts.service';
 
 describe('ContactsComponent', () => {
   let component: ContactsComponent;
@@ -8,7 +11,8 @@ describe('ContactsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactsComponent]
+      imports: [ContactsComponent, ImportsModule, NgxMaskDirective],
+      providers: [provideNgxMask()]
     })
     .compileComponents();
 

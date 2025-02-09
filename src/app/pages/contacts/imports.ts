@@ -10,13 +10,14 @@ import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { NgModule } from "@angular/core";
 import { ModalComponent } from '../../shared/components/modal/modal.component';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 @NgModule({
     imports: [
-        CommonModule, HeaderComponent,ModalComponent,FontAwesomeModule,DialogModule ,TableModule, IconFieldModule,ButtonModule,DynamicDialogModule, InputTextModule, InputIconModule
+        CommonModule, HeaderComponent,ModalComponent,ToggleButtonModule,FontAwesomeModule,DialogModule ,TableModule, IconFieldModule,ButtonModule,DynamicDialogModule, InputTextModule, InputIconModule
     ],
     exports: [
-        CommonModule, HeaderComponent,ModalComponent,FontAwesomeModule,DialogModule ,TableModule, IconFieldModule,ButtonModule,DynamicDialogModule, InputTextModule, InputIconModule
+        CommonModule, HeaderComponent,ModalComponent,ToggleButtonModule,FontAwesomeModule,DialogModule ,TableModule, IconFieldModule,ButtonModule,DynamicDialogModule, InputTextModule, InputIconModule
     ]
 })
 export class ImportsModule {}

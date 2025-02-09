@@ -4,10 +4,6 @@ import { ContactsService } from '../../shared/service/contacts.service';
 import { faPlus,faPenToSquare, faStar, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ImportsModule } from './imports';
 import { Table } from 'primeng/table';
-import { ToggleButtonModule } from 'primeng/togglebutton';
-
-
-
 interface Column {
   field: string;
   header: string;
@@ -15,7 +11,7 @@ interface Column {
 
 @Component({
   selector: 'app-contacts',
-  imports: [ImportsModule,ToggleButtonModule],
+  imports: [ImportsModule],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
 })
