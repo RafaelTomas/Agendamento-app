@@ -28,6 +28,8 @@ export class ContactsComponent {
   FaSearch = faSearch;
   loading = true;
   visible = false;
+  isModalDelete = false;
+  dataForEdit: any;
   titleModal = '';
 
   cols!: Column[];
@@ -45,7 +47,15 @@ export class ContactsComponent {
       { field: 'acao', header: '' },
   ];
   this.contactsService.getContactsLarge().then((contacts) => {
-    this.contacts = contacts;
+    this.contacts = contacts.sort((a, b) => {
+      if (a.sn_favorito === 'S' && b.sn_favorito !== 'S') {
+        return -1;
+      } else if (a.sn_favorito !== 'S' && b.sn_favorito === 'S') {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
     this.loading = false;
   });
   }
@@ -58,18 +68,38 @@ export class ContactsComponent {
     if(!data){
       this.createContact();
     }
-    console.log(this.visible);
+    if(data){
+      this.dataForEdit = data;
+      this.editContact();
+    }
+  }
+
+  editContact(){
+    this.titleModal =  'Edite seu contato';
+    this.visible = true;
   }
 
   createContact(){
     this.titleModal =  'Adicione um contato';
     this.visible = true;
-    console.log(this.visible)
   }
 
   closeModal(event: any){
     this.visible = event;
   }
 
+  formatNumber(value: string){
+    if(value.length === 8){
+      return `${value.slice(0, 4)}-${value.slice(4)}`;
+    } else if( value.length === 11){
+      return `(${value.slice(0, 2)})${value.slice(2, 7)}-${value.slice(7)}`;
+    } else{
+      return value;
+    }
+  }
 
+  contactDelete(data: any){
+    console.log(data);
+    this.isModalDelete = true;
+  }
 }

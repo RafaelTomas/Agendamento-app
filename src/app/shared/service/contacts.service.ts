@@ -12,8 +12,8 @@ export class ContactsService {
         "id": 1,
         "nome": "João da Silva",
         "email": "joao.silva@email.com",
-        "celular": "11999999999",
-        "telefone": "1133333333",
+        "celular": "81996713939",
+        "telefone": "36361136",
         "sn_favorito": "S",
         "sn_ativo": "S",
         "dh_cad": "2024-07-25T10:00:00Z"

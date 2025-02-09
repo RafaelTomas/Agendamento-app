@@ -40,12 +40,19 @@
       <ng-template #body let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
-            {{ rowData[col.field] === 'N' || rowData[col.field] === 'S' ? null : rowData[col.field] }}
+            <!-- {{ dataForEdit  | json }} -->
+            {{col.field === 'nome' || col.field === 'email'  ? rowData[col.field] : null }}
+            <div  *ngIf="col.field === 'celular' || col.field === 'telefone'">
+                {{ formatNumber(rowData[col.field]) }}
+            </div>
             <div  *ngIf="col.field === 'sn_favorito'">
               <p-button [icon]="rowData[col.field] === 'N' ? 'pi pi-star' : 'pi pi-star-fill'" severity="warn" disabled [rounded]="true" [text]="true"></p-button>
             </div>
-            <div  *ngIf="col.field === 'acao'">
-              <p-button icon="pi pi-pencil" severity="secondary" rounded (click)="showDialog(rowData)" />
+            <div class="d-flex justify-content-around" *ngIf="col.field === 'acao'">
+
+              <p-button icon="pi pi-pencil" severity="info" rounded (click)="showDialog(rowData)" />
+
+              <p-button icon="pi pi-trash" severity="danger" rounded (click)="contactDelete(rowData)" />
             </div>
           </td>
         </tr>
@@ -55,4 +62,19 @@
 </section>
 
 
-<app-modal [header]="titleModal"  [visible]="visible" (close)="closeModal($event)"></app-modal>
+<app-modal [header]="titleModal"  [visible]="visible" (close)="closeModal($event)" [parentData]="dataForEdit" ></app-modal>
+
+<p-dialog
+header="Excluir"
+[modal]="true"
+[(visible)]="isModalDelete"
+[style]="{ width: '25rem' }">
+  <p class="text-center">
+        Esse item sera excluido da sua lista!
+  </p>
+
+    <div class="d-flex justify-content-between gap-2">
+      <p-button label="Não" severity="info"/>
+      <p-button label="Sim" severity="danger"/>
+  </div>
+</p-dialog>

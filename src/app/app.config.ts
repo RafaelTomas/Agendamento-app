@@ -6,6 +6,12 @@ import Aura from '@primeng/themes/aura';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { NgxMaskConfig, provideEnvironmentNgxMask } from 'ngx-mask'
+
+const maskConfig: Partial<NgxMaskConfig> = {
+  validation: false,
+};
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
+    provideEnvironmentNgxMask(maskConfig),
     providePrimeNG({
       theme: {
         preset: Aura,
