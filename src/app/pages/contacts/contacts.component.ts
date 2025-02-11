@@ -29,7 +29,7 @@ export class ContactsComponent {
   loading = true;
   visible = false;
   isModalDelete = false;
-  dataForEdit!: Contatcs;
+  dataForEdit!: any;
   titleModal = '';
 
 
@@ -80,7 +80,7 @@ export class ContactsComponent {
     if(data){
       this.titleModal =  'Edite seu contato';
       this.visible = true;
-      this.dataForEdit = data;
+      this.dataForEdit = {...data, favorito: data.favorito === "S" ? true: false};
     }
   }
 

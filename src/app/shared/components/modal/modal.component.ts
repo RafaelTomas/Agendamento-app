@@ -61,7 +61,7 @@ export class ModalComponent implements OnInit, OnChanges {
         Validators.maxLength(15),
       ]),
       telefone: new FormControl('', [Validators.maxLength(9)]),
-      favorito: new FormControl(true),
+      favorito: new FormControl(false),
     });
   }
 
@@ -72,7 +72,7 @@ export class ModalComponent implements OnInit, OnChanges {
 
   submitData() {
     if (this.form.valid) {
-      const obj = {...this.form.value, favorito: this.form.get('favorito')?.value === "S" ? "S" : "N", id: this.parentData?.id }
+      const obj = {...this.form.value, favorito: this.form.get('favorito')?.value === true ? "S" : "N", id: this.parentData?.id }
       this.formData.emit(obj);
       this.closeModal(false);
       this.parentData = {}
