@@ -12,6 +12,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { NgxMaskDirective } from 'ngx-mask';
+import { Contatcs } from '../../types/contacts.types';
 
 @Component({
   selector: 'app-modal',
@@ -43,7 +44,7 @@ export class ModalComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['parentData']) {
-      this.form?.setValue(this.parentData);
+    this.form?.setValue(this.parentData);
     }
   }
 
@@ -61,8 +62,6 @@ export class ModalComponent implements OnInit, OnChanges {
       ]),
       telefone: new FormControl('', [Validators.maxLength(9)]),
       favorito: new FormControl(true),
-      sn_ativo: new FormControl('S'),
-      dh_cad: new FormControl(''),
     });
   }
 
@@ -73,10 +72,10 @@ export class ModalComponent implements OnInit, OnChanges {
 
   submitData() {
     if (this.form.valid) {
-      const obj = {...this.form.value, favorito: this.form.get('favorito')?.value === "S" ? "S" : "N" }
-      console.log(obj);
+      const obj = {...this.form.value, favorito: this.form.get('favorito')?.value === "S" ? "S" : "N", id: this.parentData?.id }
       this.formData.emit(obj);
       this.closeModal(false);
+      this.parentData = {}
     }
   }
 }

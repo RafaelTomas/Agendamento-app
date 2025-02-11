@@ -6,6 +6,7 @@ import { ImportsModule } from './imports';
 import { Table } from 'primeng/table';
 import { Contatcs } from '../../shared/types/contacts.types';
 import { MessageService } from 'primeng/api';
+import { error } from 'console';
 interface Column {
   field: string;
   header: string;
@@ -28,7 +29,7 @@ export class ContactsComponent {
   loading = true;
   visible = false;
   isModalDelete = false;
-  dataForEdit: any;
+  dataForEdit!: Contatcs;
   titleModal = '';
 
 
@@ -77,18 +78,30 @@ export class ContactsComponent {
       this.visible = true;
     }
     if(data){
+      this.titleModal =  'Edite seu contato';
+      this.visible = true;
       this.dataForEdit = data;
-      this.editContact(data);
     }
   }
 
-  editContact(data: Contatcs){
-    this.titleModal =  'Edite seu contato';
-    this.visible = true;
+  editContact(data:Contatcs){
+    this.contactsService.putContact(data).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Atualizado', detail: "Seu contato foi atualizado"  })
+        this.getListContacts();
+      },
+      error: (e) => this.messageService.add({ severity: 'error', summary: 'Error', detail: e  })
+  });
   }
 
   createContact(data: Contatcs){
-    this.contactsService.postContact(data).subscribe({ next: () => this.getListContacts()});
+    this.contactsService.postContact(data).subscribe({
+      next: () => {
+        this.messageService.add({ severity: 'success', summary: 'Criado', detail: "Seu contato foi criado"  })
+        this.getListContacts();
+      },
+      error: (e) => this.messageService.add({ severity: 'error', summary: 'Error', detail: e  })
+  });
   }
 
   closeModal(event: any){
@@ -97,9 +110,11 @@ export class ContactsComponent {
 
   formData(event: any){
     if(!event.id){
-      this.createContact(event)
+      this.createContact(event);
     }
-
+    if(event.id){
+      this.editContact(event);
+    }
   }
 
   formatNumber(value: string){
@@ -121,9 +136,9 @@ export class ContactsComponent {
     this.contactsService.deleteContact(this.deleteContent.id).subscribe({
       next: () => {
           this.deleteContent = {};
-          this.getListContacts()
+          this.getListContacts();
           this.isModalDelete = false;
-          this.messageService.add({ severity: 'success', summary: 'Deletado', detail: 'Seu contato foi deletado'  })
+          this.messageService.add({ severity: 'success', summary: 'Deletado', detail: 'Seu contato foi deletado'  });
       },
       error: (e) => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'e'  })
     })

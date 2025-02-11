@@ -18,12 +18,13 @@ export class ContactsService {
   postContact(data: Contatcs){
     return this.httpClient.post(this.apiUrl + `/${localStorage.getItem('userId')}`, data);
   }
+  putContact(data: Contatcs){
+    return this.httpClient.put(this.apiUrl + `/usuario/${localStorage.getItem('userId')}/contato/${data.id}`, data);
+  }
 
   deleteContact(id: number){
     return this.httpClient.put(this.apiUrl + `/usuario/${localStorage.getItem('userId')}/deletar/${id}`, {});
   }
-//   getContactsLarge() {
-//     return Promise.resolve(this.getData());
-// }
+
 
 }
