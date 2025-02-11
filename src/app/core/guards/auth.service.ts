@@ -1,21 +1,26 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticated = false;
+  private readonly platformId = inject(PLATFORM_ID);
+  isAuthenticated = false;
+
+  constructor(private router: Router) {}
 
 
   isLoggedIn(): boolean {
-    return this.isAuthenticated;
-  }
-
-  login(): void {
-    this.isAuthenticated = true;
+    if (isPlatformBrowser(this.platformId) && localStorage.getItem('token')) {
+      return true;
+    }
+    return false;
   }
 
   logout(): void {
-    this.isAuthenticated = false;
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 }
