@@ -6,7 +6,7 @@ import { ImportsModule } from './imports';
 import { Table } from 'primeng/table';
 import { Contatcs } from '../../shared/types/contacts.types';
 import { MessageService } from 'primeng/api';
-import { error } from 'console';
+
 interface Column {
   field: string;
   header: string;

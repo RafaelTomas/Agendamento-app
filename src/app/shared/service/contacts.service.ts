@@ -22,7 +22,7 @@ export class ContactsService {
     return this.httpClient.put(this.apiUrl + `/usuario/${localStorage.getItem('userId')}/contato/${data.id}`, data);
   }
 
-  deleteContact(id: number){
+  deleteContact(id: string | undefined){
     return this.httpClient.put(this.apiUrl + `/usuario/${localStorage.getItem('userId')}/deletar/${id}`, {});
   }
 

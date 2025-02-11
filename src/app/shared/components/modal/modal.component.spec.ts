@@ -35,16 +35,14 @@ describe('ModalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('deve inicializar o formulário no ngOnInit', () => {
-    component.ngOnInit();
+  it('deve inicializar o formulário no createForm', () => {
+    component.createForm();
     expect(component.form).toBeDefined();
     expect(component.form.contains('email')).toBeTrue();
     expect(component.form.contains('nome')).toBeTrue();
     expect(component.form.contains('celular')).toBeTrue();
     expect(component.form.contains('telefone')).toBeTrue();
-    expect(component.form.contains('sn_favorito')).toBeTrue();
-    expect(component.form.contains('sn_ativo')).toBeTrue();
-    expect(component.form.contains('dh_cad')).toBeTrue();
+    expect(component.form.contains('favorito')).toBeTrue();
   });
 
   it('deve atualizar o formulário quando parentData mudar', () => {
@@ -54,9 +52,7 @@ describe('ModalComponent', () => {
       nome: 'Test User',
       celular: '1234567890',
       telefone: '987654321',
-      sn_favorito: 'S',
-      sn_ativo: 'N',
-      dh_cad: '2023-10-01',
+      favorito: 'S',
     };
 
     component.parentData = mockData;
@@ -88,9 +84,7 @@ describe('ModalComponent', () => {
       nome: 'Test User',
       celular: '1234567890',
       telefone: '987654321',
-      sn_favorito: 'S',
-      sn_ativo: 'N',
-      dh_cad: '2023-10-01',
+      favorito: 'S',
     });
 
     component.submitData();
@@ -110,9 +104,7 @@ describe('ModalComponent', () => {
       nome: '',
       celular: '',
       telefone: '',
-      sn_favorito: 'N',
-      sn_ativo: 'S',
-      dh_cad: '',
+      favorito: 'N',
     });
 
     component.submitData();
