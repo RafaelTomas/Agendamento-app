@@ -40,19 +40,18 @@
       <ng-template #body let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
-            <!-- {{ dataForEdit  | json }} -->
             {{col.field === 'nome' || col.field === 'email'  ? rowData[col.field] : null }}
             <div  *ngIf="col.field === 'celular' || col.field === 'telefone'">
                 {{ formatNumber(rowData[col.field]) }}
             </div>
-            <div  *ngIf="col.field === 'sn_favorito'">
+            <div  *ngIf="col.field === 'favorito'">
               <p-button [icon]="rowData[col.field] === 'N' ? 'pi pi-star' : 'pi pi-star-fill'" severity="warn" disabled [rounded]="true" [text]="true"></p-button>
             </div>
             <div class="d-flex justify-content-around" *ngIf="col.field === 'acao'">
 
               <p-button icon="pi pi-pencil" severity="info" rounded (click)="showDialog(rowData)" />
 
-              <p-button icon="pi pi-trash" severity="danger" rounded (click)="contactDelete(rowData)" />
+              <p-button icon="pi pi-trash" severity="danger" rounded (click)="showModalDelete(rowData)" />
             </div>
           </td>
         </tr>
@@ -62,7 +61,7 @@
 </section>
 
 
-<app-modal [header]="titleModal"  [visible]="visible" (close)="closeModal($event)" [parentData]="dataForEdit" ></app-modal>
+<app-modal [header]="titleModal"  [visible]="visible" (close)="closeModal($event)" (formData)="formData($event)" [parentData]="dataForEdit" ></app-modal>
 
 <p-dialog
 header="Excluir"
@@ -75,6 +74,6 @@ header="Excluir"
 
     <div class="d-flex justify-content-between gap-2">
       <p-button label="Não" severity="info"/>
-      <p-button label="Sim" severity="danger"/>
+      <p-button label="Sim" (click)="contactDelete()" severity="danger"/>
   </div>
 </p-dialog>

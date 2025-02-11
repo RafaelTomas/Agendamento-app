@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { Contatcs } from '../types/contacts.types';
 
 
 @Injectable({
@@ -12,6 +13,14 @@ export class ContactsService {
 
   getContacts(): Observable<any>{
      return this.httpClient.get<any>(this.apiUrl + `/${localStorage.getItem('userId')}`);
+  }
+
+  postContact(data: Contatcs){
+    return this.httpClient.post(this.apiUrl + `/${localStorage.getItem('userId')}`, data);
+  }
+
+  deleteContact(id: number){
+    return this.httpClient.put(this.apiUrl + `/usuario/${localStorage.getItem('userId')}/deletar/${id}`, {});
   }
 //   getContactsLarge() {
 //     return Promise.resolve(this.getData());

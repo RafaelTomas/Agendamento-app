@@ -5,6 +5,7 @@ import { faPlus,faPenToSquare, faStar, faTrash, faSearch } from '@fortawesome/fr
 import { ImportsModule } from './imports';
 import { Table } from 'primeng/table';
 import { Contatcs } from '../../shared/types/contacts.types';
+import { MessageService } from 'primeng/api';
 interface Column {
   field: string;
   header: string;
@@ -15,6 +16,7 @@ interface Column {
   imports: [ImportsModule],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
+  providers: [MessageService]
 })
 export class ContactsComponent {
   @ViewChild('dt') dt: Table | undefined;
@@ -29,14 +31,16 @@ export class ContactsComponent {
   dataForEdit: any;
   titleModal = '';
 
+
   cols!: Column[];
   contacts!: any[];
+  deleteContent: any;
 
-  constructor(private contactsService: ContactsService){}
+  constructor(private contactsService: ContactsService, private messageService: MessageService){}
 
   ngOnInit() {
     this.cols = [
-      { field: 'sn_favorito', header: 'Favorito' },
+      { field: 'favorito', header: 'Favorito' },
       { field: 'nome', header: 'Nome' },
       { field: 'email', header: 'Email' },
       { field: 'celular', header: 'Celular' },
@@ -53,7 +57,15 @@ export class ContactsComponent {
   getListContacts(){
     this.contactsService.getContacts().subscribe({
       next: (data: any) => {
-        this.contacts = data;
+        this.contacts = data.sort((a: any, b: any) => {
+          if (a.favorito === 'S' && b.favorito !== 'S') {
+            return -1;
+          } else if (a.favorito !== 'S' && b.favorito === 'S') {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
         this.loading = false;
       }
     })
@@ -61,7 +73,8 @@ export class ContactsComponent {
 
   showDialog(data?: Contatcs) {
     if(!data){
-      // this.createContact(data);
+      this.titleModal =  'Adicione um contato';
+      this.visible = true;
     }
     if(data){
       this.dataForEdit = data;
@@ -75,12 +88,18 @@ export class ContactsComponent {
   }
 
   createContact(data: Contatcs){
-    this.titleModal =  'Adicione um contato';
-    this.visible = true;
+    this.contactsService.postContact(data).subscribe({ next: () => this.getListContacts()});
   }
 
   closeModal(event: any){
     this.visible = event;
+  }
+
+  formData(event: any){
+    if(!event.id){
+      this.createContact(event)
+    }
+
   }
 
   formatNumber(value: string){
@@ -93,8 +112,22 @@ export class ContactsComponent {
     }
   }
 
-  contactDelete(data: any){
-    console.log(data);
+  showModalDelete(data: any){
     this.isModalDelete = true;
+    this.deleteContent = data;
   }
+
+  contactDelete(){
+    this.contactsService.deleteContact(this.deleteContent.id).subscribe({
+      next: () => {
+          this.deleteContent = {};
+          this.getListContacts()
+          this.isModalDelete = false;
+          this.messageService.add({ severity: 'success', summary: 'Deletado', detail: 'Seu contato foi deletado'  })
+      },
+      error: (e) => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'e'  })
+    })
+  }
+
+
 }
