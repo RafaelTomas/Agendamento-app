@@ -7,7 +7,8 @@ import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { NgxMaskConfig, provideEnvironmentNgxMask } from 'ngx-mask'
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 const maskConfig: Partial<NgxMaskConfig> = {
   validation: false,
@@ -20,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideEnvironmentNgxMask(maskConfig),
     providePrimeNG({
       theme: {
@@ -32,3 +33,5 @@ export const appConfig: ApplicationConfig = {
   })
   ]
 };
+
+

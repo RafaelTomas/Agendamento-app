@@ -4,6 +4,7 @@ import { ContactsService } from '../../shared/service/contacts.service';
 import { faPlus,faPenToSquare, faStar, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ImportsModule } from './imports';
 import { Table } from 'primeng/table';
+import { Contatcs } from '../../shared/types/contacts.types';
 interface Column {
   field: string;
   header: string;
@@ -41,41 +42,39 @@ export class ContactsComponent {
       { field: 'celular', header: 'Celular' },
       { field: 'telefone', header: 'Telefone' },
       { field: 'acao', header: '' },
-  ];
-  this.contactsService.getContactsLarge().then((contacts) => {
-    this.contacts = contacts.sort((a, b) => {
-      if (a.sn_favorito === 'S' && b.sn_favorito !== 'S') {
-        return -1;
-      } else if (a.sn_favorito !== 'S' && b.sn_favorito === 'S') {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-    this.loading = false;
-  });
+    ];
+    this.getListContacts();
   }
 
   applyFilterGlobal($event: any, stringVal: any) {
     this.dt!.filterGlobal(($event.target as HTMLInputElement).value, stringVal);
   }
 
-  showDialog(data?: any) {
+  getListContacts(){
+    this.contactsService.getContacts().subscribe({
+      next: (data: any) => {
+        this.contacts = data;
+        this.loading = false;
+      }
+    })
+  }
+
+  showDialog(data?: Contatcs) {
     if(!data){
-      this.createContact();
+      // this.createContact(data);
     }
     if(data){
       this.dataForEdit = data;
-      this.editContact();
+      this.editContact(data);
     }
   }
 
-  editContact(){
+  editContact(data: Contatcs){
     this.titleModal =  'Edite seu contato';
     this.visible = true;
   }
 
-  createContact(){
+  createContact(data: Contatcs){
     this.titleModal =  'Adicione um contato';
     this.visible = true;
   }
