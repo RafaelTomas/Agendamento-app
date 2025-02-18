@@ -63,7 +63,7 @@ A API oferece os seguintes endpoints:
 - `USERs`
 - `POST /auth/register` - Criar um novo user.
 - `POST /auth/login` - logar.
-
+- `CONTACTs`
 - `GET /contatos/{userID}` - Listar todos os Contatos.
 - `POST /contatos/{userID}` - criar contato.
 - `PUT /contatos/usuario/{userID}/contato/{id}` - Atualizar um contato
