@@ -1,59 +1,83 @@
-# App
+# Desafio: Sistema de Agendamento com Angular 19
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.6.
+## 📌 Sobre o Desafio
+Este projeto consiste na implementação de um sistema de agendamento utilizando Angular 19 no frontend e Spring Boot no backend. O objetivo é permitir que os usuários realizem, editem e visualizem agendamentos de forma eficiente.
 
-## Development server
+## 🚀 Tecnologias Utilizadas
+- **Frontend:** Angular 19, TypeScript, PrimeNG
+- **Backend:** Spring Boot, Java, Spring Data JPA
+- **Banco de Dados:** H2 console: mem
+- **Autenticação:** Spring Security, JWT
 
-To start a local development server, run:
 
-```bash
-ng serve
-```
+## 📂 Estrutura do Projeto
+### 🖥️ Frontend (Angular 19)
+- `/src/app/components/` - Componentes reutilizáveis
+- `/src/app/shared/service/` - Serviços para comunicação com API
+- `/src/app/pages/` - Páginas principais do sistema
+- `/src/core/` - Configuração da aplicação (guards/interceptors)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 🛠️ Backend (Spring Boot)
+- `/src/main/java/com/agendamento/api/` - Pacote principal
+- `/controller/` - Camada de controle (REST APIs)
+- `/infra/` - configuração da aplicacao
+- `/repository/` - Persistência de dados
+- `/domain/` - Entidades
 
-## Code scaffolding
+## ⚙️ Configuração e Execução
+### 🔧 Backend
+1. Clone o repositório:
+   ```sh
+   git clone https://github.com/RafaelTomas/Agendamento-api
+   ```
+2. Acesse a pasta do backend:
+   ```sh
+   cd agendamento/backend
+   ```
+3. Configure o `application.properties` com os dados do banco.
+4. Execute o projeto:
+   ```sh
+   mvn spring-boot:run
+   ```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### 🖥️ Frontend
+1. Acesse a pasta do frontend:
+   ```sh
+   cd agendamento/frontend
+   ```
+2. Instale as dependências:
+   ```sh
+   npm install
+   ```
+3. Inicie a aplicação:
+   ```sh
+   ng serve
+   ```
+4. Rodar os testes:
+   ```sh
+   ng test
+   ```
 
-```bash
-ng generate component component-name
-```
+## 📖 API Endpoints
+A API oferece os seguintes endpoints:
+- `USERs`
+- `POST /auth/register` - Criar um novo user.
+- `POST /auth/login` - logar.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- `GET /contatos/{userID}` - Listar todos os Contatos.
+- `POST /contatos/{userID}` - criar contato.
+- `PUT /contatos/usuario/{userID}/contato/{id}` - Atualizar um contato
+- `PUT /contatos/usuario/{userID}/deletar/{id}` - Delação lógica de um contato
 
-```bash
-ng generate --help
-```
+## 🔒 Autenticação
+A aplicação utiliza JWT para autenticação e autorização dos usuários. Para acessar os endpoints protegidos, é necessário enviar o token no cabeçalho Authorization.
 
-## Building
+## 🛠️ Melhorias Futuras
+- realizar 100% dos testes
 
-To build the project run:
+## 📄 Licença
+Este projeto está sob a licença MIT.
 
-```bash
-ng build
-```
+---
+**Desenvolvido por Rafael Tomas 🚀**
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
